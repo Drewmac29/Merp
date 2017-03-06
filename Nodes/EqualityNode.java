@@ -24,9 +24,8 @@ public class EqualityNode extends BooleanOperatorNode {
      * @return the integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
+        if (leftChild.evaluate(symbolTable) == rightChild.evaluate(symbolTable))
+            return 1;
         return 0;
-        //TODO
     }
-
-
 }

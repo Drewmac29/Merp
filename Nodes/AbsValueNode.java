@@ -23,10 +23,8 @@ public class AbsValueNode extends UnaryOperatorNode {
      * @return an integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
-        //TODO
-        return 0;
+        return java.lang.Math.abs(child.evaluate(symbolTable));
     }
-
 }
 
 

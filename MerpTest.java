@@ -170,7 +170,7 @@ public class MerpTest {
             System.out.println("\t" + type + " toPrefixString passed");
         }
         else{
-            System.out.println("\t" + equation + " toInfixString failed. Got " +
+            System.out.println("\t" + equation + " toPrefixString failed. Got " +
                     processor.getTree().toPrefixString() +
                     " expected " + expectedPrefix);
         }

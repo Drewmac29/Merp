@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class SymbolTable {
 
-    private Map< String, Integer > table = new HashMap<>();
+    private Map<String, Integer> table = new HashMap<>();
 
     /**
      * Create an empty symbol table. A new instance of

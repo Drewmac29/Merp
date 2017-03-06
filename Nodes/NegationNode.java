@@ -23,8 +23,7 @@ public class NegationNode extends UnaryOperatorNode {
      * @return the integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
-        return 0;
-        //TODO
+        return (0 - child.evaluate(symbolTable));
     }
 
 

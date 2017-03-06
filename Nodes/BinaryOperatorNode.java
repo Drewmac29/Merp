@@ -33,7 +33,7 @@ public abstract class BinaryOperatorNode implements MerpNode {
      * @param leftChild - the MerpNode to be set at this node's left child
      */
     public void setLeftChild(MerpNode leftChild){
-        //TODO
+        this.leftChild = leftChild;
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class BinaryOperatorNode implements MerpNode {
      * @param rightChild - the MerpNode to be set at this node's right child
      */
     public void setRightChild(MerpNode rightChild){
-        //TODO
+        this.rightChild = rightChild;
     }
 
     /**
@@ -49,8 +49,7 @@ public abstract class BinaryOperatorNode implements MerpNode {
      * @return string representing the node as prefix notation
      */
     public java.lang.String toPrefixString(){
-        return null;
-        //TODO
+        return (operator + " " + leftChild.toPrefixString() + " " + rightChild.toPrefixString());
     }
 
     /**
@@ -58,7 +57,7 @@ public abstract class BinaryOperatorNode implements MerpNode {
      * @return string representing the node as infix notation
      */
     public java.lang.String toInfixString(){
-        return "{" + leftChild.toInfixString() + " " + operator + " " + rightChild.toInfixString() + "}";
+        return ("(" + leftChild.toInfixString() + " " + operator + " " + rightChild.toInfixString() + ")");
     }
 
     /**
@@ -66,8 +65,7 @@ public abstract class BinaryOperatorNode implements MerpNode {
      * @return string representing the node as postfix notation
      */
     public java.lang.String toPostfixString(){
-        //TODO
-        return null;
+        return (leftChild.toPostfixString() + " " + rightChild.toPostfixString() + " " + operator);
     }
 
     /**

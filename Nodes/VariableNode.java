@@ -25,8 +25,7 @@ public class VariableNode implements MerpNode {
      * @return the integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
-        return 0;
-        //TODO
+        return symbolTable.get(name);
     }
 
     /**
@@ -34,8 +33,7 @@ public class VariableNode implements MerpNode {
      * @return string representing the node as prefix notation
      */
     public java.lang.String toPrefixString(){
-        return null;
-        //TODO
+        return name;
     }
 
     /**
@@ -43,8 +41,7 @@ public class VariableNode implements MerpNode {
      * @return string representing the node as infix notation
      */
     public java.lang.String toInfixString(){
-        //TODO
-        return null;
+        return name;
     }
 
     /**
@@ -52,8 +49,7 @@ public class VariableNode implements MerpNode {
      * @return string representing the node as postfix notation
      */
     public java.lang.String toPostfixString(){
-        //TODO
-        return null;
+        return name;
     }
 
     /**

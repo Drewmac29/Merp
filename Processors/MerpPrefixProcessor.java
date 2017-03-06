@@ -1,6 +1,7 @@
 package Processors;
 import Nodes.MerpNode;
 import Nodes.BinaryOperatorNode;
+import Nodes.UnaryOperatorNode;
 
 /**
  * file: MerpPrefixProcessor.java
@@ -14,7 +15,7 @@ public class MerpPrefixProcessor extends MerpProcessor{
 
     /**
      * Constructs and assigns a Merp tree from the provided list of MerpNode tokens using infix notation
-     * @param tokens list of MerpNodes used to create the pares tree
+     * @param tokens list of MerpNodes used to create the parse tree
      */
     public void constructTree(java.util.ArrayList<java.lang.String> tokens){
         tree = constructTreeHelper(tokens);
@@ -29,21 +30,23 @@ public class MerpPrefixProcessor extends MerpProcessor{
         MerpNode node = createMerpNode(tokens.get(0));
         tokens.remove(0);
         //Base Case
-        if (node.getNodeType() == MerpNode.NodeType.Constant || node.getNodeType() == MerpNode.NodeType.UnaryOperation)
+        if (node.getNodeType() == MerpNode.NodeType.Constant || node.getNodeType() == MerpNode.NodeType.Variable)
             return node;
-        //General Case
-        if (node.getNodeType() == MerpNode.NodeType.BinaryOperation){
+        //Binary Case
+        else if (node.getNodeType() == MerpNode.NodeType.BinaryOperation){
             MerpNode left = constructTreeHelper(tokens);
             MerpNode right = constructTreeHelper(tokens);
             ((BinaryOperatorNode) node).setLeftChild(left);
             ((BinaryOperatorNode) node).setRightChild(right);
             return node;
         }
-        //TODO
-        return null;
+        //Unary Case
+        else if (node.getNodeType() == MerpNode.NodeType.UnaryOperation){
+            MerpNode child = constructTreeHelper(tokens);
+            ((UnaryOperatorNode) node).setChild(child);
+            return node;
+        }
+        return node;
     }
-
-
-
 
 }

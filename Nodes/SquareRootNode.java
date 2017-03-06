@@ -1,5 +1,6 @@
 package Nodes;
 import Util.SymbolTable;
+import Util.Errors;
 
 /**
  * file: SquareRootNode.java
@@ -23,10 +24,10 @@ public class SquareRootNode extends UnaryOperatorNode {
      * @return the integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
-        return 0;
-        //TODO
+        if (child.evaluate(symbolTable) < 0)
+            Errors.error("Square Root of Negative Number", this.toString());
+        return (int) java.lang.Math.sqrt(child.evaluate(symbolTable));
     }
-
 
 
 

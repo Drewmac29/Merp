@@ -24,11 +24,8 @@ public class SubtractionNode extends BinaryOperatorNode{
      * @return the integer value of this node
      */
     public int evaluate(SymbolTable symbolTable){
-        return 0;
-        //TODO
+        return (leftChild.evaluate(symbolTable) - rightChild.evaluate(symbolTable));
     }
-
-
 
 
 }

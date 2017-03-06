@@ -1,5 +1,7 @@
 package Processors;
+import Nodes.BinaryOperatorNode;
 import Nodes.MerpNode;
+import Nodes.UnaryOperatorNode;
 
 /**
  * file: MerpPostfixProcessor.java
@@ -16,7 +18,7 @@ public class MerpPostfixProcessor extends MerpProcessor {
      * @param tokens list of MerpNodes used to create the pares tree
      */
     public void constructTree(java.util.ArrayList<java.lang.String> tokens){
-        //TODO
+        tree = constructTreeHelper(tokens);
     }
 
     /**
@@ -25,11 +27,19 @@ public class MerpPostfixProcessor extends MerpProcessor {
      * @return current root of the parse tree
      */
     private MerpNode constructTreeHelper(java.util.ArrayList<java.lang.String> tokens){
-        return null;
-        //TODO
+        MerpNode node = createMerpNode(tokens.get(0));
+        tokens.remove(0);
+        if (tokens.size() > 0) {
+            MerpNode next = createMerpNode(tokens.get(0));
+            tokens.remove(0);
+            if (next.getNodeType() == MerpNode.NodeType.UnaryOperation){
+                ((UnaryOperatorNode)node).setChild(next);
+
+            }
+
+
+        }
     }
-
-
 
 
 
