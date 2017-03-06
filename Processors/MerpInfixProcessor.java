@@ -2,6 +2,7 @@ package Processors;
 import Nodes.MerpNode;
 import Nodes.BinaryOperatorNode;
 import Nodes.UnaryOperatorNode;
+import java.util.Stack;
 
 /**
  * file: MerpInfixProcessor.java
@@ -18,10 +19,28 @@ public class MerpInfixProcessor extends MerpProcessor {
      * @param tokens list of MerpNodes used to create the pares tree
      */
     public void constructTree(java.util.ArrayList<java.lang.String> tokens){
-        java.util.ArrayList<MerpNode> stack = new java.util.ArrayList<>();
-        for (int i = 0 ; i < tokens.size() ; i++)
-            stack.add(createMerpNode(tokens.get(i)));
-        tree = processStack(stack);
+        //Converts the tokens into Postfix notation using the shunting-yard algorithm
+        Stack<String> opStack = new Stack<>();
+        java.util.ArrayList<java.lang.String> postfix = new java.util.ArrayList<>();
+        for (String token : tokens){
+            MerpNode node = createMerpNode(token);
+            if (node.getNodeType() == MerpNode.NodeType.Constant || node.getNodeType() == MerpNode.NodeType.Variable)
+                postfix.add(token);
+            else {
+                while (opStack.size() > 0){
+                    MerpNode check = createMerpNode(opStack.firstElement());
+                    if (node.getPrecedence() > check.getPrecedence())
+                        postfix.add(opStack.pop());
+                    else
+                        break;
+                }
+                opStack.push(token);
+            }
+        }
+        while (opStack.size() > 0)
+            postfix.add(opStack.pop());
+        //Calls tree to be created using PostFix Reverse Polish
+        tree = processStack(postfix, new Stack<>());
     }
 
     /**
@@ -29,27 +48,26 @@ public class MerpInfixProcessor extends MerpProcessor {
      * @param stack - the list of nodes to process
      * @return the root of the parse tree
      */
-    private MerpNode processStack(java.util.ArrayList<MerpNode> stack){
-        MerpNode node = stack.get(0);
-        stack.remove(0);
-        //Base Case
-        if (node.getNodeType() == MerpNode.NodeType.Constant || node.getNodeType() == MerpNode.NodeType.Variable)
-            stack.add(node);
-        //Binary Case
-        else if (node.getNodeType() == MerpNode.NodeType.BinaryOperation){
-            MerpNode left = processStack(stack);
-            MerpNode right = processStack(stack);
-            ((BinaryOperatorNode) node).setLeftChild(left);
-            ((BinaryOperatorNode) node).setRightChild(right);
-            stack.add(node);
+    private MerpNode processStack(java.util.ArrayList<java.lang.String> tokens, Stack<MerpNode> stack){
+        while (tokens.size() > 0){
+            MerpNode node = createMerpNode(tokens.get(0));
+            tokens.remove(0);
+            if (node.getNodeType() == MerpNode.NodeType.Constant || node.getNodeType() == MerpNode.NodeType.Variable)
+                stack.push(node);
+            else if (node.getNodeType() == MerpNode.NodeType.BinaryOperation){
+                MerpNode right = stack.pop();
+                MerpNode left = stack.pop();
+                ((BinaryOperatorNode) node).setLeftChild(left);
+                ((BinaryOperatorNode) node).setRightChild(right);
+                stack.push(node);
+            }
+            else if(node.getNodeType() == MerpNode.NodeType.UnaryOperation){
+                MerpNode child = stack.pop();
+                ((UnaryOperatorNode) node).setChild(child);
+                stack.push(node);
+            }
         }
-        //Unary Case
-        else if (node.getNodeType() == MerpNode.NodeType.UnaryOperation){
-            MerpNode child = processStack(stack);
-            ((UnaryOperatorNode) node).setChild(child);
-            stack.add(node);
-        }
-        return node;
+        return stack.pop();
     }
 
 
