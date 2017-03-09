@@ -43,6 +43,7 @@ public class MerpInfixProcessor extends MerpProcessor {
         tree = processStack(postfix, new Stack<>());
     }
 
+
     /**
      * Processes a stack of MerpNodes to create a Merp Parse Tree
      * @param stack - the list of nodes to process

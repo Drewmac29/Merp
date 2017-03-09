@@ -116,7 +116,12 @@ public class MerpTest {
         testTree("y _", "(_ y)", "_ y",
                 "y _", -2, "postfix", x);
 
-        //Add more tests as you see fit.
+        //Other Tests
+        testTree("x + y * 2", "(x + (y * 2))", "+ x * y 2",
+                "x y 2 * +", 6, "infix", x);
+
+        testTree("* - * + x y 2 - x y + 2 6", "((((x + y) * 2) - (x - y)) * (2 + 6))",
+                "* - * + x y 2 - x y + 2 6", "x y + 2 * x y - - 2 6 + *", 64, "prefix", x);
     }
 
     public static void testEquation(String equation, String expectedInfix, String expectedPrefix,

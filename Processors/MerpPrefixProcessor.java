@@ -22,7 +22,7 @@ public class MerpPrefixProcessor extends MerpProcessor{
     }
 
     /**
-     * Helper to recursively contstruct the parse tree
+     * Helper to contstruct the parse tree
      * @param tokens - list of MerpNodes to process
      * @return current root of the parse tree
      */

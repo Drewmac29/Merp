@@ -41,7 +41,6 @@ public class MerpMain {
         System.out.println("Enter the equations (nothing when done entering): ");
         while(true) {
             String equation = reader.nextLine();
-
             if (equation.equals("")) {
                 break;
             } else {
