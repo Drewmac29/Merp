@@ -19,7 +19,12 @@ public class MerpPostfixProcessor extends MerpProcessor {
      * @param tokens list of MerpNodes used to create the pares tree
      */
     public void constructTree(java.util.ArrayList<java.lang.String> tokens){
-        tree = constructTreeHelper(tokens, new Stack<>());
+        //Create a new token array so original is not destroyed. Allows equation processor to check the loop correctly
+        java.util.ArrayList<java.lang.String> tokens2 = new java.util.ArrayList<>();
+        for (String token : tokens){
+            tokens2.add(token);
+        }
+        tree = constructTreeHelper(tokens2, new Stack<>());
     }
 
     /**
