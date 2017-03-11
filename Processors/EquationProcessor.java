@@ -38,7 +38,7 @@ public class EquationProcessor {
      * @param eq - equation string to be processed
      */
     public void processEquation(java.lang.String eq){
-        if (eq.equals("printVariables()")){
+        if (eq.equals("printVariables()")|| eq.equals("printVars()")){
             symbolTable.dump();
         }
         else if (eq.contains("if")){
@@ -53,10 +53,14 @@ public class EquationProcessor {
             int bool = processor.evaluateTree(symbolTable);
             String element;
             if (bool != 0) {
-                element = statements.get(1).trim().substring(6);
+                element = statements.get(1).trim();
+                if (element.contains("print"))
+                    element = element.substring(6);
             }
             else {
-                element = statements.get(2).trim().substring(6);
+                element = statements.get(2).trim();
+                if (element.contains("print"))
+                    element = element.substring(6);
             }
             element = element.trim();
             if (element.matches("^[a-zA-Z].*") && element.length() == 1) {
@@ -64,8 +68,17 @@ public class EquationProcessor {
             }
             else{
                 java.util.ArrayList<String> tokens2 = new java.util.ArrayList<>(java.util.Arrays.asList(element.split(" ")));
-                processor.constructTree(tokens2);
-                System.out.println(processor.evaluateTree(symbolTable));
+                if (tokens2.contains("=")){
+                    java.util.ArrayList<String> tokens3 = new java.util.ArrayList<>();
+                    for (int i = 2; i < tokens2.size(); i++)
+                        tokens3.add(tokens2.get(i));
+                    processor.constructTree(tokens3);
+                    symbolTable.put(tokens2.get(0), processor.evaluateTree(symbolTable));
+                }
+                else {
+                    processor.constructTree(tokens2);
+                    System.out.println(processor.evaluateTree(symbolTable));
+                }
             }
         }
         else if (eq.contains("while")){
